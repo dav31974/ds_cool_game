@@ -6,19 +6,19 @@ export class Player {
         this.width = 100;
         this.height = 91.3;
         this.x = 0;
-        this.y = this.game.height - this.height;
+        this.y = this.game.height - this.height - this.game.groundMargin;
         this.vy = 0;         // vertical speed
-        this.maxVy = 20;     // max vertical speed
-        this.weight = 0.5;     // vertical weight gravity
+        this.maxVy = 15;     // max vertical speed
+        this.weight = 0.3;     // vertical weight gravity
         this.image = document.getElementById('player');
         this.frameX = 0;      // horizontal frame of picture
         // this.maxFrame = 4     // innit max frame to sitting line (x) of picture (not necessary) 
-        this.fps = 60;
+        this.fps = 20;
         this.frameInterval = 1000 / this.fps;
         this.frameTimer = 0;
         this.frameY = 0;      // vertical frame of picture
         this.speed = 0;      // horizontal speed
-        this.maxSpeed = 10;  // horizontal max speed
+        this.maxSpeed = 5;  // horizontal max speed
         this.states = [new Sitting(this), new Running(this), new Jumping(this), new Falling(this)];
         this.currentState = this.states[0];  //  innit state to sitting
         this.currentState.enter();
@@ -61,10 +61,11 @@ export class Player {
     }
     // return true if the player is on ground and false if the player is in the air
     onGround() {
-        return this.y >= this.game.height - this.height;
+        return this.y >= this.game.height - this.height - this.game.groundMargin;
     }
-    setState(state) {
+    setState(state, speed) {
         this.currentState = this.states[state];
+        this.game.speed = this.game.maxSpeed * speed;
         this.currentState.enter();
     }
 }
