@@ -1,6 +1,7 @@
 import { Player } from './player.js';
 import { InputHandler } from './input.js';
 import { Background } from './background.js';
+import { FlyingEnemy, GroundEnemy, ClimbingEnemy } from './enemies.js';
 
 window.addEventListener('load', function () {
     const canvas = document.getElementById('canvas1');
@@ -14,20 +15,40 @@ window.addEventListener('load', function () {
             this.height = height;
             this.groundMargin = 82;
             this.speed = 0;       // horizontal speed of game 
-            this.maxSpeed = 2;
+            this.maxSpeed = 2;    // horizontal max speed of game
             this.background = new Background(this);
             this.player = new Player(this);
             this.input = new InputHandler();
+            this.enemies = [];
+            this.enemyTimer = 0;
+            this.enemyInterval = 1000;
         }
 
         update(deltaTime) {
             this.background.update();
             this.player.update(this.input.keys, deltaTime);
+            // handle enemies
+            if (this.enemyTimer > this.enemyInterval) {
+                this.addEnemy();
+                this.enemyTimer = 0;
+            } else {
+                this.enemyTimer += deltaTime;
+            }
+            this.enemies.forEach(enemy => {
+                enemy.update(deltaTime);
+                if (enemy.markedForDeletion) this.enemies.splice(this.enemies.indexOf(enemy), 1);
+            });
         }
 
         draw(context) {
             this.background.draw(ctx);
             this.player.draw(context);
+            this.enemies.forEach(enemy => {
+                enemy.draw(context);
+            });
+        }
+        addEnemy() {
+            this.enemies.push(new FlyingEnemy(this));
         }
     }
 
