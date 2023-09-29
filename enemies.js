@@ -32,8 +32,8 @@ export class FlyingEnemy extends Enemy {
         this.game = game;
         this.width = 60;
         this.height = 44;
-        this.x = this.game.width;
-        this.y = Math.random() * this.game.height * 0.5;
+        this.x = this.game.width + Math.random() * this.game.width * 0.5;  // random enemy frequence
+        this.y = Math.random() * this.game.height * 0.5;                   // random enemy altitude
         this.speedX = Math.random() + 0.5;
         this.speedY = 0;
         this.maxFrame = 5;                                       // number of frame image

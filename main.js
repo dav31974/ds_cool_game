@@ -14,7 +14,7 @@ window.addEventListener('load', function () {
             this.width = width;
             this.height = height;
             this.groundMargin = 82;
-            this.speed = 0;       // horizontal speed of game 
+            this.speed = 0;       // innit horizontal speed of game (sitting)
             this.maxSpeed = 2;    // horizontal max speed of game
             this.background = new Background(this);
             this.player = new Player(this);
