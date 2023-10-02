@@ -18,10 +18,11 @@ window.addEventListener('load', function () {
             this.maxSpeed = 2;    // horizontal max speed of game
             this.background = new Background(this);
             this.player = new Player(this);
-            this.input = new InputHandler();
+            this.input = new InputHandler(this);
             this.enemies = [];
             this.enemyTimer = 0;
             this.enemyInterval = 1000;
+            this.debug = false;
         }
 
         update(deltaTime) {
@@ -51,7 +52,7 @@ window.addEventListener('load', function () {
             if (this.speed > 0 && Math.random() > 0.5) this.enemies.push(new GroundEnemy(this));
             else if (this.speed > 0) this.enemies.push(new ClimbingEnemy(this));
             this.enemies.push(new FlyingEnemy(this));
-            console.log(this.enemies);
+            // console.log(this.enemies);
         }
     }
 

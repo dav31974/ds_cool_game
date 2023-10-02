@@ -49,6 +49,7 @@ export class Player {
     }
 
     draw(context) {
+        if (this.game.debug) context.strokeRect(this.x, this.y, this.width, this.height);   // for debug mode
         context.drawImage(this.image,
             this.frameX * this.width,    // source(image) x
             this.frameY * this.height,   // source(image) y
