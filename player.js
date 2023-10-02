@@ -8,8 +8,8 @@ export class Player {
         this.x = 0;
         this.y = this.game.height - this.height - this.game.groundMargin;
         this.vy = 0;         // vertical speed
-        this.maxVy = 15;     // max vertical speed
-        this.weight = 0.3;     // vertical weight gravity
+        this.maxVy = 24;     // max vertical speed
+        this.weight = 0.5;     // vertical weight gravity
         this.image = document.getElementById('player');
         this.frameX = 0;      // horizontal frame of picture
         // this.maxFrame = 4     // innit max frame to sitting line (x) of picture (not necessary) 

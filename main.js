@@ -6,14 +6,14 @@ import { FlyingEnemy, GroundEnemy, ClimbingEnemy } from './enemies.js';
 window.addEventListener('load', function () {
     const canvas = document.getElementById('canvas1');
     const ctx = canvas.getContext('2d');
-    canvas.width = 500;
-    canvas.height = 500;
+    canvas.width = 800;
+    canvas.height = 800;
 
     class Game {
         constructor(width, height) {
             this.width = width;
             this.height = height;
-            this.groundMargin = 82;
+            this.groundMargin = 132;
             this.speed = 0;       // innit horizontal speed of game (sitting)
             this.maxSpeed = 2;    // horizontal max speed of game
             this.background = new Background(this);
@@ -28,7 +28,7 @@ window.addEventListener('load', function () {
             this.background.update();
             this.player.update(this.input.keys, deltaTime);
             // handle enemies
-            if (this.enemyTimer > this.enemyInterval) {
+            if (this.enemyTimer > this.enemyInterval) {   // add enemy on array
                 this.addEnemy();
                 this.enemyTimer = 0;
             } else {
@@ -36,7 +36,7 @@ window.addEventListener('load', function () {
             }
             this.enemies.forEach(enemy => {
                 enemy.update(deltaTime);
-                if (enemy.markedForDeletion) this.enemies.splice(this.enemies.indexOf(enemy), 1);
+                if (enemy.markedForDeletion) this.enemies.splice(this.enemies.indexOf(enemy), 1);  // remove enemy from array
             });
         }
 
@@ -48,7 +48,10 @@ window.addEventListener('load', function () {
             });
         }
         addEnemy() {
+            if (this.speed > 0 && Math.random() > 0.5) this.enemies.push(new GroundEnemy(this));
+            else if (this.speed > 0) this.enemies.push(new ClimbingEnemy(this));
             this.enemies.push(new FlyingEnemy(this));
+            console.log(this.enemies);
         }
     }
 

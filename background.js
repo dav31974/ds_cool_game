@@ -22,7 +22,7 @@ export class Background {
     constructor(game) {
         this.game = game;
         this.width = 1667;
-        this.height = 500;
+        this.height = 800;
         this.layer1image = document.getElementById('layer1');
         this.layer2image = document.getElementById('layer2');
         this.layer3image = document.getElementById('layer3');
