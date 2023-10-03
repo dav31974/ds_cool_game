@@ -19,9 +19,7 @@ export class Player {
         this.frameY = 0;      // vertical frame of picture
         this.speed = 0;      // horizontal speed
         this.maxSpeed = 5;  // horizontal max speed
-        this.states = [new Sitting(this), new Running(this), new Jumping(this), new Falling(this), new Rolling(this)];
-        this.currentState = this.states[0];  //  innit state to sitting
-        this.currentState.enter();
+        this.states = [new Sitting(this.game), new Running(this.game), new Jumping(this.game), new Falling(this.game), new Rolling(this.game)];
     }
 
     update(input, deltaTime) {
