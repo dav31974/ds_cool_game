@@ -3,14 +3,14 @@ export class InputHandler {
         this.game = game;
         this.keys = [];
         window.addEventListener('keydown', (e) => {
-            if ((e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'ArrowRight') && this.keys.indexOf(e.key) === -1) {
+            if ((e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'ArrowRight' || e.key === 'r') && this.keys.indexOf(e.key) === -1) {
                 this.keys.push(e.key);
             } else if (e.key === 'd') {
                 this.game.debug = !this.game.debug; // set game.debug to this opposite value
             }
         });
         window.addEventListener('keyup', (e) => {
-            if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+            if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'ArrowRight' || e.key === 'r') {
                 this.keys.splice(this.keys.indexOf(e.key), 1);
             }
         });
