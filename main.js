@@ -27,14 +27,19 @@ window.addEventListener('load', function () {
             this.maxParticles = 50;   // set max particles on particles array
             this.enemyTimer = 0;
             this.enemyInterval = 1000;
-            this.debug = true;
+            this.debug = false;
             this.score = 0;
             this.fontColor = 'black';
+            this.time = 0;
+            this.maxTime = 10000;
+            this.gameOver = false;
             this.player.currentState = this.player.states[0];  //  innit state to sitting
             this.player.currentState.enter();
         }
 
         update(deltaTime) {
+            this.time += deltaTime;
+            if (this.time > this.maxTime) this.gameOver = true;
             this.background.update();
             this.player.update(this.input.keys, deltaTime);
             // handle enemies
@@ -96,7 +101,7 @@ window.addEventListener('load', function () {
         game.update(deltaTime);
         game.draw(ctx);
 
-        requestAnimationFrame(animate);
+        if (!game.gameOver) requestAnimationFrame(animate);
     }
 
     animate(0);
