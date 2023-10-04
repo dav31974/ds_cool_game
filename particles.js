@@ -14,7 +14,7 @@ class Particle {
 export class Dust extends Particle {
     constructor(game, x, y) {
         super(game);
-        this.size = Math.random() * 8 + 8;
+        this.size = Math.random() * 10 + 10;
         this.x = x;
         this.y = y;
         this.speedX = Math.random();

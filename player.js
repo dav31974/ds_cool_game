@@ -1,5 +1,6 @@
 import { Sitting, Running, Jumping, Falling, Rolling, Diving, Hit } from './playerStates.js';
 import { CollisionAnimation } from './collisionAnimation.js';
+import { FloatingMessage } from './FloatingMessage.js';
 
 export class Player {
     constructor(game) {
@@ -21,6 +22,7 @@ export class Player {
         this.speed = 0;      // horizontal speed
         this.maxSpeed = 5;  // horizontal max speed
         this.states = [new Sitting(this.game), new Running(this.game), new Jumping(this.game), new Falling(this.game), new Rolling(this.game), new Diving(this.game), new Hit(this.game)];
+        this.currentState = null;
     }
 
     update(input, deltaTime) {
@@ -84,8 +86,11 @@ export class Player {
                 this.game.collisions.push(new CollisionAnimation(this.game, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
                 if (this.currentState === this.states[4] || this.currentState === this.states[5]) {
                     this.game.score += 1;
+                    this.game.floatingMessages.push(new FloatingMessage('+1', enemy.x, enemy.y, 150, 50));
                 } else {
                     this.setState(6, 0);
+                    this.game.lives--;
+                    if (this.game.lives <= 0) this.game.gameOver = true;
                 }
             }
         });
