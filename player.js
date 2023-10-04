@@ -1,4 +1,4 @@
-import { Sitting, Running, Jumping, Falling, Rolling } from './playerStates.js';
+import { Sitting, Running, Jumping, Falling, Rolling, Diving, Hit } from './playerStates.js';
 
 export class Player {
     constructor(game) {
@@ -19,7 +19,7 @@ export class Player {
         this.frameY = 0;      // vertical frame of picture
         this.speed = 0;      // horizontal speed
         this.maxSpeed = 5;  // horizontal max speed
-        this.states = [new Sitting(this.game), new Running(this.game), new Jumping(this.game), new Falling(this.game), new Rolling(this.game)];
+        this.states = [new Sitting(this.game), new Running(this.game), new Jumping(this.game), new Falling(this.game), new Rolling(this.game), new Diving(this.game), new Hit(this.game)];
     }
 
     update(input, deltaTime) {
@@ -37,6 +37,10 @@ export class Player {
         this.y += this.vy;
         if (!this.onGround()) this.vy += this.weight;
         else this.vy = 0;
+        // vertical limit
+        if (this.y > this.game.height - this.height - this.game.groundMargin) {
+            this.y = this.game.height - this.height - this.game.groundMargin;
+        }
         // Sprite animations ----------------------
         if (this.frameTimer > this.frameInterval) {
             this.frameTimer = 0;
@@ -70,12 +74,17 @@ export class Player {
     }
     checkCollision() {
         this.game.enemies.forEach(enemy => {
-            if (enemy.x < this.x + this.width && enemy.x + enemy.width > this.x && enemy.y + enemy.height > this.y && enemy.y < this.y + this.height) {
-                // collision detected
+            if (enemy.x < this.x + this.width &&
+                enemy.x + enemy.width > this.x &&
+                enemy.y + enemy.height > this.y &&
+                enemy.y < this.y + this.height
+            ) {
                 enemy.markedForDeletion = true;
-                this.game.score += 1;
-            } else {
-                // no collision
+                if (this.currentState === this.states[4] || this.currentState === this.states[5]) {
+                    this.game.score += 1;
+                } else {
+                    this.setState(6, 0);
+                }
             }
         });
     }
