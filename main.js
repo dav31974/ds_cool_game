@@ -23,6 +23,7 @@ window.addEventListener('load', function () {
             this.UI = new UI(this);
             this.enemies = [];
             this.particles = [];
+            this.collisions = [];
             this.maxParticles = 50;   // set max particles on particles array
             this.enemyTimer = 0;
             this.enemyInterval = 1000;
@@ -55,6 +56,11 @@ window.addEventListener('load', function () {
             if (this.particles.length > this.maxParticles) {
                 this.particles = this.particles.slice(0, this.maxParticles);   // make sure of limit of particles  (slice function return a shallow copy of an array)
             }
+            // handle collision sprites
+            this.collisions.forEach((collision, index) => {
+                collision.update(deltaTime);
+                if (collision.markedForDeletion) this.collisions.splice(index, 1);
+            });
             // console.log(this.particles);
         }
 
@@ -66,6 +72,9 @@ window.addEventListener('load', function () {
             });
             this.particles.forEach(particle => {
                 particle.draw(context);
+            });
+            this.collisions.forEach(collision => {
+                collision.draw(context);
             });
             this.UI.draw(context);
         }
