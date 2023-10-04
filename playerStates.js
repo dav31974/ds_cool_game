@@ -1,4 +1,5 @@
 import { Dust } from './particles.js';
+import { Fire } from './particles.js';
 
 const states = {
     SITTING: 0,
@@ -47,7 +48,8 @@ export class Running extends State {
         this.game.player.frameY = 3;
     }
     handleInput(input) {
-        this.game.particles.push(new Dust(this.game, this.game.player.x + this.game.player.width * 0.6, this.game.player.y + this.game.player.height)) // ajout des particules
+        // unshift method adds one or more elements to the beginning of an array
+        this.game.particles.unshift(new Dust(this.game, this.game.player.x + this.game.player.width * 0.6, this.game.player.y + this.game.player.height)) // ajout des particules
         if (input.includes('ArrowDown')) {
             this.game.player.setState(states.SITTING, 0);
         } else if (input.includes('ArrowUp')) {
@@ -105,6 +107,7 @@ export class Rolling extends State {
         this.game.player.frameY = 6;
     }
     handleInput(input) {
+        this.game.particles.unshift(new Fire(this.game, this.game.player.x + this.game.player.width * 0.5, this.game.player.y + this.game.player.height * 0.5)); // ajout des particule
         if (!input.includes('r') && this.game.player.onGround()) {
             this.game.player.setState(states.RUNNING, 1);
         } else if (!input.includes('r') && !this.game.player.onGround()) {

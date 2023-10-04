@@ -23,6 +23,7 @@ window.addEventListener('load', function () {
             this.UI = new UI(this);
             this.enemies = [];
             this.particles = [];
+            this.maxParticles = 50;   // set max particles on particles array
             this.enemyTimer = 0;
             this.enemyInterval = 1000;
             this.debug = true;
@@ -49,9 +50,12 @@ window.addEventListener('load', function () {
             // handle particles
             this.particles.forEach((particle, index) => {
                 particle.update();
-                if (particle.markedForDeletion) this.particles.splice(index, 1); // remove particle from array
+                if (particle.markedForDeletion) this.particles.splice(index, 1); // (splice) remove particle from array
             });
-            console.log(this.particles);
+            if (this.particles.length > this.maxParticles) {
+                this.particles = this.particles.slice(0, this.maxParticles);   // make sure of limit of particles  (slice function return a shallow copy of an array)
+            }
+            // console.log(this.particles);
         }
 
         draw(context) {
